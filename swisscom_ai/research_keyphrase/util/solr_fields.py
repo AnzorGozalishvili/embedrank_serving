@@ -1,7 +1,7 @@
 # Copyright (c) 2017-present, Swisscom (Schweiz) AG.
 # All rights reserved.
 #
-#Authors: Kamil Bennani-Smires, Yann Savary
+# Authors: Kamil Bennani-Smires, Yann Savary
 
 """Module containing helper function to process results of a solr query"""
 
@@ -18,7 +18,7 @@ def process_tagged_text(s):
         if loc >= 0:
             return tagged_token_text[:loc], tagged_token_text[loc + len(sep):]
         else:
-            raise RuntimeError('Problem when parsing tagged token '+tagged_token_text)
+            raise RuntimeError('Problem when parsing tagged token ' + tagged_token_text)
 
     result = []
     for sent in s.split('[ENDSENT]'):

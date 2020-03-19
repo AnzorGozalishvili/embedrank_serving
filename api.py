@@ -10,8 +10,10 @@ app = Flask(__name__)
 @app.route('/')
 def analyzer():
     query = request.args.get('q')
-    top_n = int(request.args.get('n', 10))
-    keywords = launch.extract_keyphrases(embedding_distributor, pos_tagger, query, top_n, 'en')
+    lang = request.args.get('lang')
+    top_n = int(request.args.get('n', 15))
+
+    keywords = launch.extract_keyphrases(embedding_distributor, pos_tagger, query, top_n, lang)
 
     return jsonify(keywords)
 
@@ -21,4 +23,3 @@ if __name__ == '__main__':
     pos_tagger = launch.load_local_corenlp_pos_tagger()
 
     app.run(host='0.0.0.0', port=5000)
-

@@ -1,7 +1,7 @@
 # Copyright (c) 2017-present, Swisscom (Schweiz) AG.
 # All rights reserved.
 #
-#Authors: Kamil Bennani-Smires, Yann Savary
+# Authors: Kamil Bennani-Smires, Yann Savary
 
 import argparse
 import os
@@ -16,6 +16,7 @@ from nltk.parse import CoreNLPParser
 
 import swisscom_ai.research_keyphrase.preprocessing.custom_stanford as custom_stanford
 from swisscom_ai.research_keyphrase.util.fileIO import read_file, write_string
+
 
 # If you want to use spacy , install it and uncomment the following import
 # import spacy
@@ -162,7 +163,7 @@ class PosTaggingSpacy(PosTagging):
         Concrete class of PosTagging using StanfordPOSTokenizer and StanfordPOSTagger
     """
 
-    def __init__(self, nlp=None, separator='|' ,lang='en'):
+    def __init__(self, nlp=None, separator='|', lang='en'):
         if not nlp:
             print('Loading Spacy model')
             #  self.nlp = spacy.load(lang, entity=False)
@@ -184,8 +185,9 @@ class PosTaggingSpacy(PosTagging):
         doc = self.nlp(text)
         if as_tuple_list:
             return [[(token.text, token.tag_) for token in sent] for sent in doc.sents]
-        return '[ENDSENT]'.join(' '.join(self.separator.join([token.text, token.tag_]) for token in sent) for sent in doc.sents)
-    
+        return '[ENDSENT]'.join(
+            ' '.join(self.separator.join([token.text, token.tag_]) for token in sent) for sent in doc.sents)
+
 
 class PosTaggingCoreNLP(PosTagging):
     """
@@ -193,10 +195,10 @@ class PosTaggingCoreNLP(PosTagging):
     Provides a faster way to process several documents using since it doesn't require to load the model each time.
     """
 
-    def __init__(self, host='localhost' ,port=9000, separator='|'):
+    def __init__(self, host='localhost', port=9000, separator='|'):
         self.parser = CoreNLPParser(url=f'http://{host}:{port}')
         self.separator = separator
-    
+
     def pos_tag_raw_text(self, text, as_tuple_list=True):
         # Unfortunately for the moment there is no method to do sentence split + pos tagging in nltk.parse.corenlp
         # Ony raw_tag_sents is available but assumes a list of str (so it assumes the sentence are already split)
@@ -207,19 +209,17 @@ class PosTaggingCoreNLP(PosTagging):
             Perform tokenizing sentence splitting and PosTagging and keep the 
             sentence splits structure
             """
-            properties = {'annotators':'tokenize,ssplit,pos'}
+            properties = {'annotators': 'tokenize,ssplit,pos'}
             tagged_data = self.parser.api_call(text, properties=properties)
             for tagged_sentence in tagged_data['sentences']:
                 yield [(token['word'], token['pos']) for token in tagged_sentence['tokens']]
-        
+
         tagged_text = list(raw_tag_text())
 
         if as_tuple_list:
             return tagged_text
         return '[ENDSENT]'.join(
             [' '.join([tuple2str(tagged_token, self.separator) for tagged_token in sent]) for sent in tagged_text])
-        
-
 
 
 if __name__ == '__main__':

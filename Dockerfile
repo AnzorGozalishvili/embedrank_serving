@@ -55,5 +55,6 @@ ADD launch.py .
 ADD api.py .
 ADD entrypoint.sh .
 
+# run bash script which starts stanfordcorenlp server and then flask api
 ENTRYPOINT ["sh"]
 CMD ["entrypoint.sh"]

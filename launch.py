@@ -50,7 +50,6 @@ if __name__ == '__main__':
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-raw_text', help='raw text to process')
     group.add_argument('-text_file', help='file containing the raw text to process')
-    
 
     parser.add_argument('-tagger_host', help='CoreNLP host', default='localhost')
     parser.add_argument('-tagger_port', help='CoreNLP port', default=9000)

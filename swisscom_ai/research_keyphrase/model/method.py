@@ -1,7 +1,7 @@
 # Copyright (c) 2017-present, Swisscom (Schweiz) AG.
 # All rights reserved.
 #
-#Authors: Kamil Bennani-Smires, Yann Savary
+# Authors: Kamil Bennani-Smires, Yann Savary
 
 import warnings
 
@@ -33,13 +33,13 @@ def _MMR(embdistrib, text_obj, candidates, X, beta, N, use_filtered, alias_thres
     doc_embedd = extract_doc_embedding(embdistrib, text_obj, use_filtered)  # Extract doc embedding
     doc_sim = cosine_similarity(X, doc_embedd.reshape(1, -1))
 
-    doc_sim_norm = doc_sim/np.max(doc_sim)
+    doc_sim_norm = doc_sim / np.max(doc_sim)
     doc_sim_norm = 0.5 + (doc_sim_norm - np.average(doc_sim_norm)) / np.std(doc_sim_norm)
 
     sim_between = cosine_similarity(X)
     np.fill_diagonal(sim_between, np.NaN)
 
-    sim_between_norm = sim_between/np.nanmax(sim_between, axis=0)
+    sim_between_norm = sim_between / np.nanmax(sim_between, axis=0)
     sim_between_norm = \
         0.5 + (sim_between_norm - np.nanmean(sim_between_norm, axis=0)) / np.nanstd(sim_between_norm, axis=0)
 
@@ -120,7 +120,7 @@ def max_normalization(array):
     :param array: 1-d array
     :return: 1-d array max- normalized : each value is multiplied by 1/max value
     """
-    return 1/np.max(array) * array.squeeze(axis=1)
+    return 1 / np.max(array) * array.squeeze(axis=1)
 
 
 def get_aliases(kp_sim_between, candidates, threshold):

@@ -1,7 +1,7 @@
 # Copyright (c) 2017-present, Swisscom (Schweiz) AG.
 # All rights reserved.
 #
-#Authors: Kamil Bennani-Smires, Yann Savary
+# Authors: Kamil Bennani-Smires, Yann Savary
 
 from abc import ABC, abstractmethod
 
@@ -19,6 +19,7 @@ class EmbeddingDistributor(ABC):
     """
     Abstract class in charge of providing the embeddings of piece of texts
     """
+
     @abstractmethod
     def get_tokenized_sents_embeddings(self, sents):
         """
