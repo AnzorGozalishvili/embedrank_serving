@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  embedrank_serving:
+    container_name: embedrank_serving
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./wiki_bigrams.bin:/sent2vec/pretrained_model.bin"
+

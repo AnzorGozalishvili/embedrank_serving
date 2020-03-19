@@ -1,0 +1,10 @@
+[STANFORDTAGGER]
+jar_path =
+model_directory_path =
+
+[STANFORDCORENLPTAGGER]
+host =
+port =
+
+[SENT2VEC]
+model_path =
