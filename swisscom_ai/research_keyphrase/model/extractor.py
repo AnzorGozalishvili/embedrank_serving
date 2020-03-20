@@ -43,7 +43,6 @@ def extract_candidates(text_obj, no_subset=False):
     Based on part of speech return a list of candidate phrases
     :param text_obj: Input text Representation see @InputTextObj
     :param no_subset: if true won't put a candidate which is the subset of an other candidate
-    :param lang: language (currently en, fr and de are supported)
     :return: list of candidate phrases (string)
     """
 
