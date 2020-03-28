@@ -52,20 +52,22 @@ This return for each text a tuple containing three lists:
 as keyphrase)
 
 ```python
-import launch
-
 from flask import Flask, jsonify, request
+
+import launch
 
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route("/", methods=['POST'])
 def analyzer():
-    query = request.args.get('q')
-    lang = request.args.get('lang')
-    top_n = int(request.args.get('n', 15))
+    data = request.json
+    query = data.get("text", "")
+    lang = data.get("lang", "en")
+    top_n = int(data.get("n", 15))
 
-    keywords = launch.extract_keyphrases(embedding_distributor, pos_tagger, query, top_n, lang)
+    keywords = launch.extract_keyphrases(embedding_distrib=embedding_distributor, ptagger=pos_tagger,
+                                         raw_text=query, N=top_n, lang=lang)
 
     return jsonify(keywords)
 
@@ -77,15 +79,16 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
 ```
 
-## GET request from bash
-
+## Curl example to call API
+ 
 You can simply query from terminal
 ```bash
-wget http://0.0.0.0:5000?q="some text here"&n=10&lang="en"
-
+curl --location --request POST 'http://0.0.0.0:5000/' \            
+    --header 'Content-Type: application/json' \
+    --data-raw '{"text": "some text here", "lang":"en", "n":10}'
 ```
 
-## GET request from python
+## POST request from python
 ```python
 import json
 import requests
@@ -94,8 +97,9 @@ text = "sample text to extract keywords from"
 top_n = 15
 lang = "en"
 
-url = f"http://0.0.0.0:5000?q={text}&n={top_n}&lang={lang}"
-result = requests.get(url)
+url = f"http://0.0.0.0:5000/"
+data = {"text": "some text here", "lang":"en", "n":10}
+result = requests.post(url, data)
 content = json.loads(result.content)
 
 keywords = content[0]

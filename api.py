@@ -7,11 +7,12 @@ import launch
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=['POST'])
 def analyzer():
-    query = request.args.get("q")
-    lang = request.args.get("lang", "en")
-    top_n = int(request.args.get("n", 15))
+    data = request.json
+    query = data.get("text", "")
+    lang = data.get("lang", "en")
+    top_n = int(data.get("n", 15))
 
     keywords = launch.extract_keyphrases(embedding_distrib=embedding_distributor, ptagger=pos_tagger,
                                          raw_text=query, N=top_n, lang=lang)
