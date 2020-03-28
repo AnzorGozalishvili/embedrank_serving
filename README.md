@@ -53,6 +53,7 @@ as keyphrase)
 
 ```python
 from flask import Flask, jsonify, request
+from waitress import serve
 
 import launch
 
@@ -76,7 +77,7 @@ if __name__ == '__main__':
     embedding_distributor = launch.load_local_embedding_distributor()
     pos_tagger = launch.load_local_corenlp_pos_tagger()
 
-    app.run(host='0.0.0.0', port=5000)
+    serve(app, host="0.0.0.0", port=5000)
 ```
 
 ## Curl example to call API
