@@ -85,7 +85,12 @@ You can simply query from terminal
 ```bash
 curl --location --request POST 'http://0.0.0.0:5000/' \            
     --header 'Content-Type: application/json' \
-    --data-raw '{"text": "some text here", "lang":"en", "n":10}'
+    --data-raw '{"text": "Unsupervised Keyphrase Extraction using Sentence Embeddings.", "lang":"en", "n":10}'
+```
+
+Response
+```bash
+[["sentence embeddings","unsupervised keyphrase extraction"],[1.0,0.8930467367172241],[[],[]]]
 ```
 
 ## POST request from python
@@ -98,8 +103,8 @@ top_n = 15
 lang = "en"
 
 url = f"http://0.0.0.0:5000/"
-data = {"text": "some text here", "lang":"en", "n":10}
-result = requests.post(url, data)
+data = {"text": "Unsupervised Keyphrase Extraction using Sentence Embeddings.", "lang":"en", "n":10}
+result = requests.post(url, json=data)
 content = json.loads(result.content)
 
 keywords = content[0]
