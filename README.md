@@ -98,10 +98,6 @@ Response
 import json
 import requests
 
-text = "sample text to extract keywords from"
-top_n = 15
-lang = "en"
-
 url = f"http://0.0.0.0:5000/"
 data = {"text": "Unsupervised Keyphrase Extraction using Sentence Embeddings.", "lang":"en", "n":10}
 result = requests.post(url, json=data)
