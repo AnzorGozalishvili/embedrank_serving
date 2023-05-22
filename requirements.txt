@@ -4,6 +4,6 @@ numpy==1.14.3
 scikit-learn==0.19.0
 scipy==0.19.1
 six==1.10.0
-requests==2.21.0
+requests==2.31.0
 Flask==1.1.1
 waitress==1.4.3
